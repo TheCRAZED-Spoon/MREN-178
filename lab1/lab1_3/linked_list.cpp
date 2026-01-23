@@ -2,7 +2,7 @@
 FILENAME:     linked_list.cpp 
 COURSE:       MREN 178
 LAB:          1
-STUDENTS:    [STUDENT NAMES AND IDS HERE] 
+STUDENTS:    Spencer Tapp, Owen Reid
 DATE:         
 
 ATTRIBUTIONS: [LIST ANY EXTERNAL CONTIBUTORS/CONTRIBUTIONS HERE] 
@@ -52,7 +52,18 @@ int insert_data_at_head (int val){
 
     /*-------------------------insert your code here--------------------------*/
 
-  
+    if (p_head == NULL) {
+        p_head = p_new;
+        p_tail = p_new;
+        return EXIT_OK;
+    }
+
+    // set node followin p_new to the one currently pointed to by the head
+    p_new->p_next_node = p_head;
+
+    // make the head now point to p_new
+    p_head=p_new;
+
     return EXIT_OK;   
 }
  
@@ -68,6 +79,17 @@ int insert_data_at_tail (int val) {
     // then both the head and back pointers need to be updated.
   
     /*-------------------------insert your code here--------------------------*/
+    
+    // 
+    if (p_head == NULL) {
+        p_head = p_new;
+        p_tail = p_new;
+        return EXIT_OK;
+    }
+
+    p_tail->p_next_node = p_new;
+
+    p_tail=p_new;
   
     return EXIT_OK;
 }
@@ -90,12 +112,18 @@ int insert_data_at_middle(int search_val, int val) {
 
             /*---------------------insert your code here-----------------------*/
 
+            p_new->p_next_node = p_temp->p_next_node;
+
+            p_temp->p_next_node = p_new;
+
             return EXIT_OK;
        }
        
        // if we've reached here, node was not found yet - move on to next node
        
        /*-------------------------insert your code here--------------------------*/
+
+       p_temp = p_temp->p_next_node;
 
     }
     return EXIT_ERROR;
@@ -122,13 +150,36 @@ int find_and_delete_data (int val) {
             
            /*---------------------insert your code here-----------------------*/
 
-           return EXIT_OK;
+            //deleting head
+            if (p_temp == p_head) {
+                p_head=p_temp->p_next_node;
+                free(p_temp);
+                pp_node=NULL;
+                Serial.print("HEAD");
+            } 
+            else if (p_temp == p_tail) { // DELETING TAIL
+                (*pp_node)->p_next_node = NULL;
+                p_tail = *pp_node;
+                free(p_temp);
+                
+                p_tail->p_next_node= NULL;
+
+                Serial.print("TAIL");
+            } else { //deleting item from middle
+                (*pp_node)->p_next_node = p_temp->p_next_node;
+                free(p_temp);
+                Serial.print("OTHER");
+            }
+            return EXIT_OK;
+
+           
         }
        
         // if we've reached here, node was not found yet - move on to next node
     
         /*------------------------insert your code here-----------------------*/
-
+        pp_node = &&(*p_temp);
+        p_temp = p_temp->p_next_node;
     }
     // get here only if we searched whole list and found nothing
     return EXIT_ERROR;
@@ -142,7 +193,9 @@ int delete_all_data() {
     // Loop through all nodes
     while (p_head != NULL) {
         /*-----------------------insert your code here-------------------------*/
-
+        p_temp = p_head;
+        p_head = p_head->p_next_node;
+        free(p_temp); 
     }
     return EXIT_OK;
 }

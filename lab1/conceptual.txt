@@ -1,0 +1,36 @@
+Question 1:
+
+When a key is pressed the resistance in the circuit leading to the A0 pin is increased. This makes the A0 Analog
+pin have and read a lower voltage value. The general reading will depend on which button is pressed with certain ranges pertaining 
+to certain button presses. After the pin reads the value, it is captured in memory by the 'button_read' variable. To be stored in
+memory, the analog (voltage) value must be converted into a computer-storable value. In this case that would be an int.
+(the return type of the analogRead function)
+
+
+Question 2:
+
+The Arduino analogRead function returns an int. On an Arduino an int is stored as 2 bytes of data [1]. As such we store
+the read value as an int. This yields max and min values of -32,768 to 32,767. If you attempt to store something larger
+or smaller than those bounds, you will run into an integer overflow or underflow respectively. This will not crash the 
+program, however will result in essentially garbage values. (when overflowing, the number will wrap around to -32,768)
+
+
+Question 3:
+
+On an Arduino there are 3 types of memory [2]. There is flash, RAM and eeprom. The flash is used to store sketches
+and is considered non volatile. This means that it does not require power to store values. Thus anything stored
+in the flash memory (our programs) will persist after losing power. For our actual number that changes during operation, 
+it is stored in the RAM [2] which is a volatile type of memory, meaning that it is erased on power loss. There is also
+eeprom which is also non-volatile, however it is not used in our sketch. 
+
+When the reset button is pressed, it has the same effect as disconnecting the board from power [3]. This causes all
+non-volatile memory to be reset, and when the board does regain power, the flash memory is re-loaded, thus restoring
+our program to the initial state defined in the void setup() function.
+
+
+
+
+Source
+[1] https://docs.arduino.cc/language-reference/en/variables/data-types/int/
+[2] https://docs.arduino.cc/learn/programming/memory-guide/
+[3] https://support.arduino.cc/hc/en-us/articles/5779192727068-Reset-your-board

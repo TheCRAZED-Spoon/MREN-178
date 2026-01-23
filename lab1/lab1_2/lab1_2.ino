@@ -24,6 +24,8 @@ LiquidCrystal lcd(pin_RS,  pin_EN,  pin_d4,  pin_d5,  pin_d6,  pin_d7);
 
 int display_num;
 bool is_held;
+int arr[] = {0,0,0,0,0};
+bool arr_full = false;
 
 void setup() {
   Serial.begin(9600);
@@ -45,7 +47,6 @@ void loop() {
 
   //read button inputs
   button_read = analogRead (0);
-  Serial.println(button_read); // for debug purposes
 
   //if right button
   if (button_read < 60 && !is_held) {
@@ -68,16 +69,47 @@ void loop() {
     is_held = true;
   }
   // select button
-  // else if (button_read < 800 && !is_held){
-    
-  // }
+  else if (button_read < 800 && !is_held){
+    arr_full = append(display_num);
+    is_held = true;
+  }
   // no button pressed
   else if (button_read > 1020){
     //enable the pressing of other buttons
     is_held = false;
   }
-  //display the number
-  lcd.print(display_num);
-  //clear any leftover text from prior calls of print
-  lcd.print("          ");
+
+  if (!arr_full) {
+    //display the number
+    lcd.print(display_num);
+    //clear any leftover text from prior calls of print
+    lcd.print("          ");
+    for (int i = 0; i < 5; i++){
+      Serial.print(arr[i]);
+      Serial.print(" ");
+    }
+    Serial.print("\t\t");
+    Serial.println(button_read); // for debug purposes
+  }
+  else {
+    Serial.println("Array is full.");
+    lcd.print("Array is full           ");
+  }
+  
+}
+
+bool append(int num) {
+  for (int i = 0; i < 5; i++) {
+    if (arr[i] == 0) {
+      arr[i] = num;
+      if (i == 4) {
+          return true;
+      }
+      return false;
+    } 
+    if (i == 4) {
+        return true;
+    }
+  }
+  return false;
 }

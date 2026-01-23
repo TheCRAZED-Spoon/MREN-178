@@ -1,0 +1,22 @@
+Question 1:
+
+Because individual variables do not scale well. For the example of array printing it will be difficult and annoying to do the entire array printing for 100 variables as you will
+need to do things like write out 100 individual variable names. This would make the code unmaintainable as you will need to waste so much time (and flash storage) typing out 100s of 
+variable names.
+
+Question 2:
+Some applications may not have a set number of indices. Meaning that it is possible that on one run of the program, it only needs to store 2 values. However on another
+it could need to store 1000 values. In this situation your program would always need to have at least 1000 storage spaces, wasting memory if it only needs 2.
+
+As for deleting an item from the middle, it is *relatively complicated on compute time as you must (on average) iterate over at least half of the items in the array
+to shift them all over after deleting one.
+
+Question 3:
+It is good because it allows for better leverage of pointer arithmetic by guaranteeing that each value is sequential in memory. On top of allowing use of pointer arithmetic,
+it is quicker/easier for a computer to retrieve a value from a known index than it would be in a linked list. In a linked list, to access the 100th element, you would need
+to follow 100 pointers, which could be slow. As for an array, you could just go to the first space (which in c is pointed to by the variable name) then you can just add
+99 to get to the 100th element. 
+It could be bad because when allocating a large chunk of memory, it may not have any 'open spaces' large enough to be stored. For example, your system may have a total
+of 100 bytes of free space, however, they may be scattered around in 2 byte fragments. In this situation, despite having 100 bytes of total free space, the max size of
+array you would be able to allocate is 2 bytes.
+
