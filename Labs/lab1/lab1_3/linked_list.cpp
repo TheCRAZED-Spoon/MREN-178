@@ -159,18 +159,23 @@ int find_and_delete_data (int val) {
                 pp_node=NULL;
                 Serial.print("HEAD");
             } 
-            else if (p_temp == p_tail) { // DELETING TAIL
+            // DELETING TAIL
+            else if (p_temp == p_tail) { 
                 (*pp_node)->p_next_node = NULL;
                 p_tail = *pp_node;
                 free(p_temp);
                 
                 p_tail->p_next_node= NULL;
-
-                Serial.print("TAIL");
-            } else { //deleting item from middle
-                (*pp_node)->p_next_node = p_temp->p_next_node;
-                free(p_temp);
-                Serial.print("OTHER");
+            //deleting item from middle
+            } else { 
+                // shift the node in front of the current one onto this one
+                p_temp->data_val=p_temp->p_next_node->data_val;
+                // point at the next node (the one we can delete)
+                pp_node=&(p_temp->p_next_node);
+                // make the current node point to the next next node
+                p_temp->p_next_node=p_temp->p_next_node->p_next_node;
+                // delete the next node
+                free(*pp_node);
             }
             return EXIT_OK;
 
@@ -180,9 +185,6 @@ int find_and_delete_data (int val) {
         // if we've reached here, node was not found yet - move on to next node
     
         /*------------------------insert your code here-----------------------*/
-        //create a pointer to the current node (p_temp) and store it in pp_node
-        Node *current = p_temp;
-        pp_node = &current;
         p_temp = p_temp->p_next_node;
     }
     // get here only if we searched whole list and found nothing
