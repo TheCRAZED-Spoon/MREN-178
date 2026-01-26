@@ -1,3 +1,5 @@
+#include "WString.h"
+#include "HardwareSerial.h"
 /******************************************************************************
 FILENAME:     linked_list.cpp 
 COURSE:       MREN 178
@@ -178,7 +180,9 @@ int find_and_delete_data (int val) {
         // if we've reached here, node was not found yet - move on to next node
     
         /*------------------------insert your code here-----------------------*/
-        pp_node = &&(*p_temp);
+        //create a pointer to the current node (p_temp) and store it in pp_node
+        Node *current = p_temp;
+        pp_node = &current;
         p_temp = p_temp->p_next_node;
     }
     // get here only if we searched whole list and found nothing
