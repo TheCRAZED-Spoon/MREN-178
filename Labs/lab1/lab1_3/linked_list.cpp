@@ -152,7 +152,7 @@ int find_and_delete_data (int val) {
             
            /*---------------------insert your code here-----------------------*/
 
-            //deleting head
+            // DELETING HEAD
             if (p_temp == p_head) {
                 p_head=p_temp->p_next_node;
                 free(p_temp);
@@ -161,29 +161,38 @@ int find_and_delete_data (int val) {
             } 
             // DELETING TAIL
             else if (p_temp == p_tail) { 
-                (*pp_node)->p_next_node = NULL;
-                p_tail = *pp_node;
-                free(p_temp);
-                
-                p_tail->p_next_node= NULL;
-            //deleting item from middle
-            } else { 
-                // shift the node in front of the current one onto this one
-                p_temp->data_val=p_temp->p_next_node->data_val;
+                // (*pp_node)->p_next_node = NULL;
+                // p_tail = *pp_node;
+                // free(p_temp);
+
+                // bad implementation, start from the head and go through until at the node prior to tail
+                p_temp = p_head;
+                while (p_temp->p_next_node->data_val != NULL) {
+                    p_temp = p_temp->p_next_node;
+                }
+                p_tail = p_temp;
+                free(p_temp->p_next_node);
+                p_temp->p_next_node = NULL;
+            } 
+            // DELETING MIDDLE
+            else {
                 // point at the next node (the one we can delete)
-                pp_node=&(p_temp->p_next_node);
-                // make the current node point to the next next node
-                p_temp->p_next_node=p_temp->p_next_node->p_next_node;
+                Node *delete_this_one = p_temp->p_next_node; 
+                // check if the next one is the tail, so we can update where the tail should be
+                if (delete_this_one == p_tail) {
+                    p_tail = p_temp;
+                }
+                // shift the node in front of the current one onto this one
+                p_temp->data_val = p_temp->p_next_node->data_val; // make the value of the current one the next one
+                p_temp->p_next_node = delete_this_one->p_next_node; // make the current node point to the one after we are going to delete
                 // delete the next node
-                free(*pp_node);
+                free(delete_this_one);
             }
             return EXIT_OK;
-
-           
         }
        
         // if we've reached here, node was not found yet - move on to next node
-    
+
         /*------------------------insert your code here-----------------------*/
         p_temp = p_temp->p_next_node;
     }
