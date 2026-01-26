@@ -167,7 +167,7 @@ int find_and_delete_data (int val) {
 
                 // bad implementation, start from the head and go through until at the node prior to tail
                 p_temp = p_head;
-                while (p_temp->p_next_node->data_val != NULL) {
+                while (p_temp->p_next_node != p_tail) {
                     p_temp = p_temp->p_next_node;
                 }
                 p_tail = p_temp;
