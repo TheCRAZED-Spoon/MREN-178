@@ -1,3 +1,4 @@
+=============================PART 1=====================
 Question 1:
 
 When a key is pressed the resistance in the circuit leading to the A0 pin is increased. This makes the A0 Analog
@@ -27,10 +28,58 @@ When the reset button is pressed, it has the same effect as disconnecting the bo
 non-volatile memory to be reset, and when the board does regain power, the flash memory is re-loaded, thus restoring
 our program to the initial state defined in the void setup() function.
 
-
-
-
 Source
 [1] https://docs.arduino.cc/language-reference/en/variables/data-types/int/
 [2] https://docs.arduino.cc/learn/programming/memory-guide/
 [3] https://support.arduino.cc/hc/en-us/articles/5779192727068-Reset-your-board
+
+=================PART 2============================
+Question 1:
+
+Because individual variables do not scale well. For the example of array printing it will be difficult and annoying to do the entire array printing for 100 variables as you will
+need to do things like write out 100 individual variable names. This would make the code unmaintainable as you will need to waste so much time (and flash storage) typing out 100s of 
+variable names.
+
+Question 2:
+Some applications may not have a set number of indices. Meaning that it is possible that on one run of the program, it only needs to store 2 values. However on another
+it could need to store 1000 values. In this situation your program would always need to have at least 1000 storage spaces, wasting memory if it only needs 2.
+
+As for deleting an item from the middle, it is *relatively complicated on compute time as you must (on average) iterate over at least half of the items in the array
+to shift them all over after deleting one.
+
+Question 3:
+It is good because it allows for better leverage of pointer arithmetic by guaranteeing that each value is sequential in memory. On top of allowing use of pointer arithmetic,
+it is quicker/easier for a computer to retrieve a value from a known index than it would be in a linked list. In a linked list, to access the 100th element, you would need
+to follow 100 pointers, which could be slow. As for an array, you could just go to the first space (which in c is pointed to by the variable name) then you can just add
+99 to get to the 100th element. 
+It could be bad because when allocating a large chunk of memory, it may not have any 'open spaces' large enough to be stored. For example, your system may have a total
+of 100 bytes of free space, however, they may be scattered around in 2 byte fragments. In this situation, despite having 100 bytes of total free space, the max size of
+array you would be able to allocate is 2 bytes.
+
+=====================================PART 3==============================
+Question 1:
+
+the major benefit of the linked list over the array is the ability to make lists of varying sizes.
+Specifically since this is on an aruino with (relatively) low memory, it would be inneficient
+to store (for example) an array of 100 data_val(s). Instead, we can dynamically grow and shrink our
+list to suit our needs. Another benefit is the ability to NOT be required to move through the entire array
+when editing values in between other values.
+
+NOTE: the current implementation of deleting the tail is O(n^2) which I believe is similar to or greater than
+that of a regular array. I would know how to do this efficiently if I could have written the loops myself
+however since it was outside of the "insert your code here" area, I could not think of any better methods.
+
+Question 2:
+
+by using dynamic memory instead, storing a linked list of 10 nodes, requires approximately double the memory
+of storing an array of 10 values. This is because having to store a pointer in every node is **similar to storing 
+a second int on every value. Another worry is that this memory is slower to access due to the nature of the heap (malloc)
+over the stack. In terms of fragmentation, our implementation could block the use of arrays later due to the non contiguous chunks
+that we place randomly through the heap. In a situation where arrays were usable (fixed number of nodes)
+then we could use memory more efficiently.
+
+Question 3:
+
+If free was never called, eventually all of the heap would fill up with nodes, and then calling malloc any more would
+simply always return null (what happens when there is not enough space for malloc to work) which would 
+essentially put a hard limit of nodes that you could insert before the program would no longer work.
