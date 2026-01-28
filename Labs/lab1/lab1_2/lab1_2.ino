@@ -102,12 +102,9 @@ bool append(int num) {
   for (int i = 0; i < 5; i++) {
     if (arr[i] == 0) {
       arr[i] = num;
-      if (i == 4) {
-          return true;
-      }
       return false;
-    } 
-    if (i == 4) {
+    }
+    else if (i == 4 && arr[i] != 0) {
         return true;
     }
   }
