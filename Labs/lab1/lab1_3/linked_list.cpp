@@ -157,13 +157,13 @@ int find_and_delete_data (int val) {
                 p_head=p_temp->p_next_node;
                 free(p_temp);
                 pp_node=NULL;
-                Serial.print("HEAD");
             } 
             // DELETING TAIL
             else if (p_temp == p_tail) { 
-                (*pp_node)->p_next_node = NULL;
-                p_tail = *pp_node;
+                (*pp_node) = NULL;
+                p_tail = (Node*)(pp_node);
                 free(p_temp);
+                
 
                 // bad implementation, start from the head and go through until at the node prior to tail
                 // p_temp = p_head;
@@ -194,7 +194,7 @@ int find_and_delete_data (int val) {
         // if we've reached here, node was not found yet - move on to next node
 
         /*------------------------insert your code here-----------------------*/
-        pp_node = &(p_temp->p_next_node);
+        pp_node = &((*pp_node)->p_next_node);
         p_temp = p_temp->p_next_node;
     }
     // get here only if we searched whole list and found nothing
