@@ -104,7 +104,7 @@ bool append(int num) {
       arr[i] = num;
       return false;
     }
-    else if (i == 4 && arr[i] != 0) {
+    else if (i == 4) {
         return true;
     }
   }
