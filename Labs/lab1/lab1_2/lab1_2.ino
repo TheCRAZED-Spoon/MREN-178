@@ -2,10 +2,10 @@
 FILENAME:     lab_1_1.ino 
 COURSE:       MREN 178
 LAB:          1
-STUDENT(S):   [STUDENT NAMES AND IDS HERE] 
-DATE:         
+STUDENT(S):   Reid 20516094, Tapp 20512353
+DATE:         28/01/2026
 
-ATTRIBUTIONS: [LIST ANY EXTERNAL CONTIBUTORS/CONTRIBUTIONS HERE] 
+ATTRIBUTIONS: n/A
 
 ******************************************************************************/
 // include the library code:

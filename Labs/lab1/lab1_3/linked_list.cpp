@@ -4,7 +4,7 @@
 FILENAME:     linked_list.cpp 
 COURSE:       MREN 178
 LAB:          1
-STUDENTS:    Spencer Tapp, Owen Reid
+STUDENTS:     Reid 20516094, Tapp 20512353
 DATE:         
 
 ATTRIBUTIONS: [LIST ANY EXTERNAL CONTIBUTORS/CONTRIBUTIONS HERE] 
