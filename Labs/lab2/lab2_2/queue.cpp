@@ -88,7 +88,7 @@ int Dequeue (pQueue queue, long &timestamp) {
 
 int DequeueAll (pQueue queue) {
   /*-------------------------insert your code here--------------------------*/
-  long timestamp;
+  long timestamp; // tbh, this is just to re-use the deque function
   while (queue->count > 0) {
     Dequeue(queue, timestamp);
   }
