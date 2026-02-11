@@ -1,0 +1,50 @@
+Part 1:
+Question 1:
+Problems where stacks are useful are those that include tracking file changes. In class we used the undo/redo function in word,
+however I will use davinci resolve as an example. In davinci, everytime you make an edit, a record is added to a stack. This allows
+you to quickly zoom through your 'version history' by undoing edits (poping them off of the stack and performing them in reverse) until
+you reach the 'version' that you wanted.
+A good physical example is that of my clothing drawer. When laundry is done I push clothing items to the stack (drawer). Then when I want
+to wear items, I pop them from the drawer.
+
+Question 2:
+The major difference is if the stack can/cannot dynamically resize. A basic array based stack can only hold a fixed number of elements.
+It can do this while not wasting any space by ONLY holding the data each stack element refers to. This is apposed to a LL implementation,
+in which the only functional limit to the number of items your stack can store is the physically available memory. However, each individual
+item also requires more memory than an individual array-implementation item. This is because the LL item must store the required data AS WELL 
+AS a pointer.
+
+Question 3:
+The use of timestamped data relates to what data is being timestamped. In the example of data logs of an experiment, scientists can simply push every
+sensor reading to a stack. This will give them data that can show how their data will trend over time. (as stack items are stored sequentially by creation)
+However, they will be unable to see how their individual data points relate to real world time, thus making timestamping important.
+In the example of version control/version history of a word document, the word document will actually store the timestamp of a major document change
+next to what the change actually was.
+
+
+Part 2:
+Question 1:
+In the scenario of a call center, a queue is the perfect data structure to use. Calling customers will be put on hold during busy periods where operators 
+cannot attend to all customers at once. When a customer is put on hold, their number/line will be enqueued. This will allow 
+ensure that the customers that have been waiting the longest always get serverd first, as the first customer enqueued will be the 
+first customer dequeued.
+
+Question 2:
+Memory implications of LL queues vs Array queues are the same as those for a stack (see pt 1, question 2). However queues must also 
+consider another thing, being queue position. In a linked list this is easy, as many implemtations already have FIRST an LAST pointers.
+This will allow programmers to easily enque items by simply adding an item at the FIRST of the list and dequeuing items by removing from
+the LAST pointer. This is apposed to an array implementation which has 2 general methods.
+1 - Naive
+Every time you enque an item, iterate over EVERY item in the array, moving them all over to make space for the new one.
+2 - Better
+Track the positions of both the first, last and number of items in the array. Thus allowing you to easily add items to the 
+array at the front position and remove items at the end position. While doing this ensure that proper 'array arithmatic' is done to 
+accurately track the front and last items.
+In my opinion, both of those implementations of array based queues are inferior to their LL counterparts, either becasue they are more 
+complicated, or they are simply too inefficient.
+
+Question 3:
+On small microcontrollers like the arduino, ever bit of memory matters. Every time you add an element to a queue you spend 
+some of your memory budget. By freeing, you essentially return that memory budget. Once your system is out of memory, functions
+like malloc or realloc will begin to fail, ruining your system until you either empty out the memory with something like free
+or simply resetting the system. Honestly, this applies to ALL dynamically allocated memory. Not just queue structures.
