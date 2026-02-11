@@ -30,7 +30,11 @@ ensure that the customers that have been waiting the longest always get serverd 
 first customer dequeued.
 
 Question 2:
-Memory implications of LL queues vs Array queues are the same as those for a stack (see pt 1, question 2). However queues must also 
+Memory implications of LL queues vs Array queues are the same as those for a stack (see pt 1, question 2). Additionally, if dynamically resizing the queue, you run the risk
+of fragmenting memory. This can lead to all available memory being in small chuncks. If a large block memory is attempted to be allocated for an array (bigger than the available chunks), 
+it will fail even if there is enough memory available overall.
+
+Queues must also 
 consider another thing, being queue position. In a linked list this is easy, as many implemtations already have FIRST an LAST pointers.
 This will allow programmers to easily enque items by simply adding an item at the FIRST of the list and dequeuing items by removing from
 the LAST pointer. This is apposed to an array implementation which has 2 general methods.
@@ -44,7 +48,12 @@ In my opinion, both of those implementations of array based queues are inferior 
 complicated, or they are simply too inefficient.
 
 Question 3:
-On small microcontrollers like the arduino, ever bit of memory matters. Every time you add an element to a queue you spend 
-some of your memory budget. By freeing, you essentially return that memory budget. Once your system is out of memory, functions
-like malloc or realloc will begin to fail, ruining your system until you either empty out the memory with something like free
-or simply resetting the system. Honestly, this applies to ALL dynamically allocated memory. Not just queue structures.
+
+On small microcontrollers such as an Arduino, memory is extremely limited. Every time you add an element to a queue you use memory.
+If you forget to free removed items, they will continue to use memory and the Arduino will quickly run out resulting in undefined behavour such as 
+dynamic allocation failing, the arduino crashing or resetting, and instructions such as function calls, and variable management begining to behave unpredicably. 
+
+
+
+  
+
